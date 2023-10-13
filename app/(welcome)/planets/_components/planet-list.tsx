@@ -1,19 +1,19 @@
-import { Result } from '@/interfaces/films';
-import {Skeleton} from "@/components/ui/skeleton";
-import {FilmCard} from "@/app/(welcome)/films/_components/film-card";
+import { Result } from '@/interfaces/planets';
+import { Skeleton } from "@/components/ui/skeleton";
+import { PlanetCard } from "@/app/(welcome)/planets/_components/planet-card";
 
-interface FilmListProps {
-  films: Result[] | undefined
+interface PlanetListProps {
+  planets: Result[] | undefined
 }
-export const FilmList = ({
- films
-}: FilmListProps) => {
+export const PlanetList = ({
+ planets
+}: PlanetListProps) => {
   return (
     <ul className={"flex flex-wrap justify-around gap-4 px-4 mt-8"}>
-      {films ? (
-        films.map((film: Result, index: number) => (
+      {planets ? (
+        planets.map((planet: Result, index: number) => (
           <li key={index}>
-            <FilmCard film={film} />
+            <PlanetCard planet={planet} />
           </li>
         ))
       ) : (

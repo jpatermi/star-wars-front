@@ -2,20 +2,20 @@
 
 import starWarsApi from "@/lib/starWarsApi";
 import { useState, useEffect } from "react";
-import { Film } from '@/interfaces/films';
+import { Planet } from '@/interfaces/planets';
 import { Button } from "@/components/ui/button";
-import { FilmList } from "@/app/(welcome)/films/_components/film-list";
+import { PlanetList } from "@/app/(welcome)/planets/_components/planet-list";
 
-export default function FilmHome() {
-  const [film, setFilm] = useState<Film>();
+export default function PlanetHome() {
+  const [planet, setPlanet] = useState<Planet>();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getFilm = async (): Promise<void> => {
+  const getPlanets = async (): Promise<void> => {
     try {
       setIsLoading(true);
-      const { data } = await starWarsApi.get('/films');
-      setFilm(data);
+      const { data } = await starWarsApi.get('/planets');
+      setPlanet(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -26,11 +26,11 @@ export default function FilmHome() {
   const next = async () => {
     try {
       setIsLoading(true);
-      const newPage = film?.next?.split('=')[1] || '1';
+      const newPage = planet?.next?.split('=')[1] || '1';
       setPage(+newPage)
-      setFilm(undefined)
-      const { data } = await starWarsApi.get(`/films/?page=${newPage}`);
-      setFilm(data);
+      setPlanet(undefined)
+      const { data } = await starWarsApi.get(`/planets/?page=${newPage}`);
+      setPlanet(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -41,11 +41,11 @@ export default function FilmHome() {
   const previous = async () => {
     try {
       setIsLoading(true);
-      const newPage = film?.previous?.split('=')[1] || 1;
+      const newPage = planet?.previous?.split('=')[1] || 1;
       setPage(+newPage)
-      setFilm(undefined)
-      const { data } = await starWarsApi.get(`films/?page=${newPage}`);
-      setFilm(data);
+      setPlanet(undefined)
+      const { data } = await starWarsApi.get(`planets/?page=${newPage}`);
+      setPlanet(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -54,26 +54,26 @@ export default function FilmHome() {
   }
 
   useEffect((): void => {
-    getFilm();
+    getPlanets();
   }, [])
 
   return (
     <div>
       <h1 className="text-3xl font-medium text-sky-700 text-center">
-        Films
+        Planet
       </h1>
 
-      <FilmList films={ film?.results } />
+      <PlanetList planets={ planet?.results } />
 
-      {film && (
+      {planet && (
       <>
-        <p className={"text-center py-8"}>{ `Page ${page} / ${Math.ceil(film?.count / 10)}` }</p>
+        <p className={"text-center py-8"}>{ `Page ${page} / ${Math.ceil(planet?.count / 10)}` }</p>
         <div className={"flex gap-8 justify-center pb-8"}>
           <Button
             variant={ "default" }
             className={ "w-40" }
             onClick={ previous }
-            disabled={ !film?.previous || isLoading}
+            disabled={ !planet?.previous || isLoading}
           >
             Previous
           </Button>
@@ -81,7 +81,7 @@ export default function FilmHome() {
             variant={"default"}
             className={"w-40"}
             onClick={ next }
-            disabled={ !film?.next || isLoading}
+            disabled={ !planet?.next || isLoading}
           >
             Next
           </Button>

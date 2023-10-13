@@ -1,4 +1,4 @@
-import { Result } from '@/interfaces/film';
+import { Result } from '@/interfaces/films';
 
 import {
   Card,

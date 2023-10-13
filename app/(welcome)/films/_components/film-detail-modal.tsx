@@ -10,7 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Result } from "@/interfaces/film";
+import { Result } from "@/interfaces/films";
 
 interface DetailModalProps {
   film: Result
