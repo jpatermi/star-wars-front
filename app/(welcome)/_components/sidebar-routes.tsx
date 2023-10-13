@@ -1,7 +1,6 @@
 "use client";
 
 import { Film, PersonStanding, Orbit, CarFront, Home } from "lucide-react";
-import { usePathname } from "next/navigation";
 
 import { SidebarItem } from "./sidebar-item";
 
