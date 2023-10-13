@@ -34,7 +34,6 @@ const routes = [
 ];
 
 export const SidebarRoutes = () => {
-  const pathname = usePathname();
 
   return (
     <div className="flex flex-col w-full">
