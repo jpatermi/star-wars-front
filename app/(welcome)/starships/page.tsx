@@ -2,20 +2,20 @@
 
 import starWarsApi from "@/lib/starWarsApi";
 import { useState, useEffect } from "react";
-import { Planet } from '@/interfaces/planets';
+import { Starship } from '@/interfaces/starships';
 import { Button } from "@/components/ui/button";
-import { PlanetList } from "@/app/(welcome)/planets/_components/planet-list";
+import { StarshipList } from "@/app/(welcome)/starships/_components/starship-list";
 
-export default function PlanetHome() {
-  const [planet, setPlanet] = useState<Planet>();
+export default function StarshipHome() {
+  const [starship, setStarship] = useState<Starship>();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getPlanets = async (): Promise<void> => {
+  const getStarships = async (): Promise<void> => {
     try {
       setIsLoading(true);
-      const { data } = await starWarsApi.get('/planets');
-      setPlanet(data);
+      const { data } = await starWarsApi.get('/starships');
+      setStarship(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -26,11 +26,11 @@ export default function PlanetHome() {
   const next = async () => {
     try {
       setIsLoading(true);
-      const newPage = planet?.next?.split('=')[1] || '1';
+      const newPage = starship?.next?.split('=')[1] || '1';
       setPage(+newPage)
-      setPlanet(undefined)
-      const { data } = await starWarsApi.get(`/planets/?page=${newPage}`);
-      setPlanet(data);
+      setStarship(undefined)
+      const { data } = await starWarsApi.get(`/starships/?page=${newPage}`);
+      setStarship(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -41,11 +41,11 @@ export default function PlanetHome() {
   const previous = async () => {
     try {
       setIsLoading(true);
-      const newPage = planet?.previous?.split('=')[1] || 1;
+      const newPage = starship?.previous?.split('=')[1] || 1;
       setPage(+newPage)
-      setPlanet(undefined)
-      const { data } = await starWarsApi.get(`planets/?page=${newPage}`);
-      setPlanet(data);
+      setStarship(undefined)
+      const { data } = await starWarsApi.get(`starships/?page=${newPage}`);
+      setStarship(data);
     } catch (error) {
       console.error(error);
     } finally {
@@ -54,26 +54,26 @@ export default function PlanetHome() {
   }
 
   useEffect((): void => {
-    getPlanets();
+    getStarships();
   }, [])
 
   return (
     <div>
       <h1 className="text-3xl font-medium text-sky-700 text-center">
-        Planets
+        Starships
       </h1>
 
-      <PlanetList planets={ planet?.results } />
+      <StarshipList starships={ starship?.results } />
 
-      {planet && (
+      {starship && (
       <>
-        <p className={"text-center py-8"}>{ `Page ${page} / ${Math.ceil(planet?.count / 10)}` }</p>
+        <p className={"text-center py-8"}>{ `Page ${page} / ${Math.ceil(starship?.count / 10)}` }</p>
         <div className={"flex gap-8 justify-center pb-8"}>
           <Button
             variant={ "default" }
             className={ "w-40" }
             onClick={ previous }
-            disabled={ !planet?.previous || isLoading}
+            disabled={ !starship?.previous || isLoading}
           >
             Previous
           </Button>
@@ -81,7 +81,7 @@ export default function PlanetHome() {
             variant={"default"}
             className={"w-40"}
             onClick={ next }
-            disabled={ !planet?.next || isLoading}
+            disabled={ !starship?.next || isLoading}
           >
             Next
           </Button>
